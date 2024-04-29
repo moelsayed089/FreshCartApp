@@ -1,55 +1,71 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Logo from '../../images/freshcart-logo.svg'
+import { useContext } from "react"
+import { authContext } from "../../context/auth"
 
 export const Navbar = () => {
+    const {token,setToken} = useContext(authContext)
+
+    const Navaigate =useNavigate()
+    const HandleLogout =()=>{
+        localStorage.removeItem('token')
+        setToken(null)
+        Navaigate('/')
+    } 
     return <>
         <header className="bg-white">
-            <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8  px-4 sm:px-6 lg:px-8">
                 <img src={Logo} alt="image_header"/>
 
-                <div className="flex flex-1 items-center justify-end md:justify-between">
-                    <nav aria-label="Global" className="hidden md:block">
-                        <ul className="flex items-center gap-6 text-sm">
-                            <li>
-                                <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'product'}> Products </Link>
-                            </li>
+                <div className="flex flex-1 items-center justify-end gap-2 ">
+                    {token ? <div>
+                        <nav aria-label="Global" className="hidden md:block">
+                            <ul className="flex items-center gap-6 text-sm">
+                                <li>
+                                    <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'product'}> Products </Link>
+                                </li>
+                                <li>
+                                    <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'categories'}> Categories </Link>
+                                </li>
+                                <li>
+                                    <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'brands'}> Brands </Link>
+                                </li>
 
-                            <li>
-                                <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'categories'}> Categories </Link>
-                            </li>
-
-                            <li>
-                                <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'brands'}> Brands </Link>
-                            </li>
-
-                        
-                        </ul>
-                    </nav>
-
-                    <div className="flex items-center gap-4">
-                        <div className="sm:flex sm:gap-4">
-                            <Link
-                                className="block rounded-md bg-green-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-green-700"
-                                to={'login'}
-                            >
-                                Login
-                            </Link>
-
-                            <Link
-                                className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 sm:block"
-                                to={'register'}
-                            >
-                                Register
-                            </Link>
-
-                            <ul className=" hidden md:flex  md:items-center md:gap-6 md:text-sm">
                                 <li>
                                     <Link className="text-gray-500 transition font-semibold  hover:text-green-500" to={'profile'}> Profile </Link>
                                 </li>
                             </ul>
+                        </nav>
+                    </div> : ""}
+
+                    <div className="flex items-center  gap-4">
+                        <div className="sm:flex sm:gap-4">
+
+                            {token ? <>
+
+                                <ul className=" hidden md:flex  md:items-center md:gap-6 md:text-sm">
+                                    <li>
+                                        <button onClick={HandleLogout} className="rounded-md bg-red-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-red-700" to={'profile'}> Logout </button>
+                                    </li>
+                                </ul>
+                            </> : <>
+
+                                        <Link
+                                            className="block rounded-md bg-green-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-green-700"
+                                            to={'login'}
+                                        >
+                                            Login
+                                        </Link>
+
+                                        <Link
+                                            className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-green-600 transition hover:text-green-600/75 sm:block"
+                                            to={'register'}
+                                        >
+                                            Register
+                                        </Link>
+                            </>}
+                            
                         </div>
-
-
 
                         <button
                             className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden"

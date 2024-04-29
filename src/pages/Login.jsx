@@ -3,9 +3,10 @@ import instance from "../config/axios.config"
 import { ValditionLoginUser } from "../validation"
 import Input from "../components/ui/Input"
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Loading } from "../components/ui/Loading"
 import toast from "react-hot-toast"
+import { authContext } from "../context/auth"
 
 export const Login = () => {
   const UserInfornation = {
@@ -13,6 +14,7 @@ export const Login = () => {
     password: "",
   }
 
+  const { setToken } = useContext(authContext)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -32,10 +34,13 @@ export const Login = () => {
           position: "bottom-right"
         })
       }
+
       localStorage.setItem('token',data.token)
+      setToken(data.token)
+
       setTimeout(() => {
         navigate('/product')
-      },1500)
+      },1000)
     } catch (error) {
       toast.error(error.response.data.message, {
         position: "bottom-right"
