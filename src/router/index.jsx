@@ -8,6 +8,10 @@ import { Categories } from "../pages/Categories";
 import { Profile } from "../pages/Profile";
 import { NotFound } from "../pages/NotFound";
 import HomePage from "../pages";
+import EmailRest from "../pages/EmailRest";
+import { OTPPage } from "../pages/OTPPage";
+import { NewPassword } from "../pages/NewPassword";
+
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -20,6 +24,9 @@ const router = createBrowserRouter(
                 <Route path="brands" element={<Brands />}/>
                 <Route path="categories" element={<Categories />}/>
                 <Route path="profile" element={<Profile />}/>
+                <Route path="emailrest" element={<EmailRest />}/>
+                <Route path="otppage" element={<OTPPage />}/>
+                <Route path="newpassword" element={<NewPassword />}/>
         </Route>
 
         <Route path="*" element={<NotFound />}/>

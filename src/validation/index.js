@@ -48,3 +48,47 @@ export const ValditionLoginUser = (values) => {
 
     return errors;
 };
+
+
+// ----------- ValditionEmailForOTP -----------
+export const ValditionEmailForOTP = (values) => {
+  const errors = {};
+
+  if (
+    values.email.includes("@") === false &&
+    values.email.includes(".") === false
+  ) {
+    errors.email = "Email not valid";
+  }
+
+  return errors;
+};
+
+// ----------- ValditionRest -----------
+export const ValditionRest = (values) => {
+  const errors = {};
+
+  if (values.resetCode.length > 9  ) {
+    errors.resetCode = "resetCode must ";
+  }
+
+  return errors;
+};
+
+// ----------- ValditionResetPassword -----------
+export const ValditionResetPassword = (values) => {
+  const errors = {};
+
+  if (
+    values.email.includes("@") === false &&
+    values.email.includes(".") === false
+  ) {
+    errors.email = "Email not valid";
+  }
+
+  if (values.newPassword.length < 7 || values.newPassword.length > 15) {
+    errors.newPassword = "Password must be form 7 characters to 15 characters";
+  }
+
+  return errors;
+};

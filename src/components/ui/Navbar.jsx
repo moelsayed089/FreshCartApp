@@ -5,7 +5,6 @@ import { authContext } from "../../context/auth"
 
 export const Navbar = () => {
     const {token,setToken} = useContext(authContext)
-
     const Navaigate =useNavigate()
     const HandleLogout =()=>{
         localStorage.removeItem('token')
@@ -16,8 +15,7 @@ export const Navbar = () => {
         <header className="bg-white">
             <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8  px-4 sm:px-6 lg:px-8">
                 <img src={Logo} alt="image_header"/>
-
-                <div className="flex flex-1 items-center justify-end gap-2 ">
+                <div className="flex flex-1 items-center justify-end gap-4">
                     {token ? <div>
                         <nav aria-label="Global" className="hidden md:block">
                             <ul className="flex items-center gap-6 text-sm">
@@ -30,7 +28,6 @@ export const Navbar = () => {
                                 <li>
                                     <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'brands'}> Brands </Link>
                                 </li>
-
                                 <li>
                                     <Link className="text-gray-500 transition font-semibold  hover:text-green-500" to={'profile'}> Profile </Link>
                                 </li>

@@ -65,6 +65,8 @@ export const Login = () => {
 
           </div>
 
+          <Link to={'/emailrest'} className="text-sm  underline text-green-600 hover:text-green-700"> Forget password</Link>
+
           <button
             type="submit"
             className="block w-full rounded-lg bg-green-600 px-5 py-3 text-sm font-medium text-white"
