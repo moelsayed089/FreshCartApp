@@ -1,8 +1,8 @@
 import { useFormik } from "formik"
 import instance from "../config/axios.config"
-import { ValditionLoginUser, ValditionResetPassword } from "../validation"
+import { ValditionResetPassword } from "../validation"
 import Input from "../components/ui/Input"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useContext, useState } from "react"
 import { Loading } from "../components/ui/Loading"
 import toast from "react-hot-toast"
@@ -65,8 +65,6 @@ export const NewPassword = () => {
 
                     </div>
 
-                    {/* <Link to={'/emailrest'} className="text-sm  underline text-green-600 hover:text-green-700"> Forget password</Link> */}
-
                     <button
                         type="submit"
                         className="block w-full rounded-lg bg-green-600 px-5 py-3 text-sm font-medium text-white"
@@ -74,10 +72,6 @@ export const NewPassword = () => {
                         {isLoading ? <Loading color={'#eeee'} width={'20'} /> : "Sign in"}
                     </button>
 
-                    {/* <p className="text-center text-sm text-gray-500">
-                        Don't you an account?
-                        <Link className="underline" to={'/register'}>Sign up</Link>
-                    </p> */}
                 </form>
             </div>
         </div>
