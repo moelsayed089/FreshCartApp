@@ -53,7 +53,7 @@ export const CategoriesSlick = () => {
 
     if (isLoading) return <Loading color={'#14B014'} width={"80"}/>
     return <>
-    <div className="slider-container">
+    <div className="slider-container overflow-hidden">
         <Slider {...settings}>
             {responseCategories.map((cate,idx)=>(
                 <div key={idx}>
