@@ -9,6 +9,9 @@ import sliderImage3 from '../images/slider-image-3.jpeg'; // Import image using 
 import sliderImage4 from '../images/slider-2.jpeg'; // Import image using 'import' syntax
 
 const HomeSlick = () => {
+
+
+   
     let settings = {
         dots: true,
         infinite: true,
@@ -21,16 +24,16 @@ const HomeSlick = () => {
     return (
         <div className="slider-container">
             <Slider {...settings}>
-                <div>
+                <div className='focus:outline-none'>
                     <img style={{ width: '100%', height: '550px', objectFit:"cover"}} src={sliderImage1} alt="" />
                 </div>
-                <div>
+                <div className='focus:outline-none'>
                     <img style={{ width: '100%', height: '550px', objectFit:"cover"}} src={sliderImage2} alt="" />
                 </div>
-                <div>
+                <div className='focus:outline-none'>
                     <img style={{ width: '100%', height: '550px', objectFit:"cover"}} src={sliderImage3} alt="" />
                 </div>
-                <div>
+                <div className='focus:outline-none'>
                     <img style={{ width: '100%', height: '550px', objectFit:"cover"}} src={sliderImage4} alt="" />
                 </div>
             </Slider>

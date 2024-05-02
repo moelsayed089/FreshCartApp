@@ -56,7 +56,7 @@ export const CategoriesSlick = () => {
     <div className="slider-container overflow-hidden">
         <Slider {...settings}>
             {responseCategories.map((cate,idx)=>(
-                <div key={idx}>
+                <div key={idx} className='focus:outline-none'>
                     <img style={{ width: '100%',height:'200px'}} src={cate.image} alt={cate.name} />
                     <p className='mt-1 '>{cate.name}</p>
                 </div>
