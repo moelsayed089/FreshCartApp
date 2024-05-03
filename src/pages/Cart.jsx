@@ -4,14 +4,13 @@ import { Loading } from '../components/ui/Loading'
 import toast from 'react-hot-toast'
 
 export const Cart = () => {
-  const { UpdataProductToCart, DeleteProductToCart, GetProductToCart, numOfCartItems, totalCartPrice, allProducts } = useContext(cartContext)
+  const { ClearProductToCart, UpdataProductToCart, DeleteProductToCart, GetProductToCart, numOfCartItems, totalCartPrice, allProducts } = useContext(cartContext)
   const [isLoading, setIsLoading] = useState(false)
 
 
   useEffect(() => {
     GetProductToCart()
   }, [])
-
 
 
   const DeleteItemToCart =async(productId)=>{
@@ -32,8 +31,6 @@ export const Cart = () => {
     }))
   }
 
-
-
   const UpdataProductToCartIncrement = async (productId,count) => {
     const res = await UpdataProductToCart(productId,count)
     console.log(res)
@@ -46,6 +43,17 @@ export const Cart = () => {
 
 
 
+  const RemoveAllProductToCart = async () => {
+    const res = await ClearProductToCart()
+    console.log(res)
+    if (res.message === "success") {
+      toast.success("Clear All Products successfully", {
+        position: "bottom-right"
+      })
+    }
+  }
+
+
   const UpdataProductToCartdecreasement = async (productId, count) => {
     const res = await UpdataProductToCart(productId, count)
     console.log(res)
@@ -56,15 +64,29 @@ export const Cart = () => {
     }
   }
 
-  if (allProducts === null) return <Loading color={'#14B014'} width={"80"} />
+
+
+   if (allProducts === null) return <Loading color={'#14B014'} width={"80"} />
+
+
+
 
   return <>
+
+    
     <div className="mx-auto max-w-screen-xl  px-4 sm:px-6 lg:px-8">
-      <div className='py-2 px-3'>
+
+
+      
+
+      {allProducts.length === 0 ? <div className='flex items-center justify-center h-screen'>
+        <h1 className='text-5xl'>Not Products Added !!</h1>
+      </div> : <div className='py-2 px-3'>
         <h1 className='text-3xl font-medium mb-3'>Shop Card</h1>
         <p className='text-lg'>numOfCartItems: {numOfCartItems}</p>
         <p className='text-lg mb-1'>totalCartPrice: {totalCartPrice}</p>
-      </div>
+      </div>}
+
 
       {allProducts.map((item, idx) => {
         return <div key={idx} className=" grid grid-cols-1 md:grid-cols-12 mb-2  px-3 py-2 bg-slate-50 border-solid border-1 border-green-400 rounded-md border-b-4  ">
@@ -79,8 +101,8 @@ export const Cart = () => {
             <h2 className="text-xl font-semibold">{item.product.title}</h2>
             <p className="text-lg font-semibold">{item.price} EGP</p>
             <button onClick={() => DeleteItemToCart(item.product.id)} 
-            className=" mt-2 border-2 py-1 rounded-md px-4 border-red-500 hover:text-white hover:bg-red-600 duration-200 " >
-              {isLoading[item.product.id] ? <Loading color={"#21313C"} width={20} />: "Delete"}
+            className=" mt-2  py-1 rounded-md px-4 bg-red-500 text-white  " >
+              {isLoading[item.product.id] ? <Loading color={"#eee"} width={20} />: "Delete"}
               </button>
           </div>
 
@@ -94,12 +116,12 @@ export const Cart = () => {
 
 
 
-
+      {allProducts.length === 0 ? "" : <button onClick={() => RemoveAllProductToCart()}
+        className=" mt-2 border-2 py-2 rounded-md px-10 border-red-500 hover:text-white hover:bg-red-600 duration-200 ">
+        Clear All Products
+      </button>}
 
 
     </div>
   </>
-
-
-
 }
