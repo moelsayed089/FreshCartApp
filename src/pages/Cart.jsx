@@ -1,15 +1,37 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { cartContext } from '../context/cartContext'
 import { Loading } from '../components/ui/Loading'
+import toast from 'react-hot-toast'
 
 export const Cart = () => {
-  const { GetProductToCart, numOfCartItems, totalCartPrice, allProducts } = useContext(cartContext)
+  const { DeleteProductToCart, GetProductToCart, numOfCartItems, totalCartPrice, allProducts } = useContext(cartContext)
+  const [isLoading, setIsLoading] = useState(false)
 
-  console.log(allProducts)
 
   useEffect(() => {
     GetProductToCart()
   }, [])
+
+
+
+  const DeleteItemToCart =async(productId)=>{
+    setIsLoading((previousState) => ({
+      ...previousState,
+      [productId]: true
+    }))
+    const res= await DeleteProductToCart(productId)
+    console.log(res)
+    if (res.status === "success"){
+      toast.success("Product Deleted successfully", {
+        position: "bottom-right"
+      })
+    }
+    setIsLoading((previousState) => ({
+      ...previousState,
+      [productId]: false
+    }))
+  }
+
 
   if (allProducts === null) return <Loading color={'#14B014'} width={"80"} />
 
@@ -28,11 +50,15 @@ export const Cart = () => {
             <img className=" h-[100px] rounded-md object-cover " src={item.product.imageCover} alt="" />
           </div>
 
+
           <div className="col-span-9 py-2 ">
             <p className="text-green-600 font-normal text-sm">{item.product.category.name}</p>
             <h2 className="text-xl font-semibold">{item.product.title}</h2>
             <p className="text-lg font-semibold">{item.price} EGP</p>
-            <button className=" mt-2 border-2 py-1 rounded-md px-4 border-red-500 hover:text-white hover:bg-red-600 duration-200 " >Delete</button>
+            <button onClick={() => DeleteItemToCart(item.product.id)} 
+            className=" mt-2 border-2 py-1 rounded-md px-4 border-red-500 hover:text-white hover:bg-red-600 duration-200 " >
+              {isLoading[item.product.id] ? <Loading color={"#21313C"} width={20} />: "Delete"}
+              </button>
           </div>
 
           <div className="col-span-1 flex items-center justify-between mt-3 md:mt-0 ">

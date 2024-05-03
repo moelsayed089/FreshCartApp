@@ -40,7 +40,6 @@ export function CartCintextProvider({children}){
                 }
             })
 
-            // console.log(data.data.products)
             setNumOfCartItems(data.numOfCartItems)
             setTotalCartPrice(data.data.totalCartPrice)
             setAllProducts(data.data.products)
@@ -51,14 +50,31 @@ export function CartCintextProvider({children}){
     }
 
 
+    async function DeleteProductToCart(productId) {
+        try {
+            const { data } = await instance.delete(`/cart/${productId}`, {
+                headers: {
+                    token: localStorage.getItem('token')
+                }
+            })
 
-    useEffect(()=>{
+            setNumOfCartItems(data.numOfCartItems)
+            setTotalCartPrice(data.data.totalCartPrice)
+            setAllProducts(data.data.products)
+
+            return data
+        } catch (error) {
+            console.log(error.response.data.message)
+        }
+    }
+    
+
+    useEffect(() => {
         GetProductToCart()
-    },[])
+    }, [])
 
 
-
-    return <cartContext.Provider value={{ GetProductToCart, AddProductToCart, numOfCartItems, totalCartPrice, allProducts }}>
+    return <cartContext.Provider value={{ DeleteProductToCart, GetProductToCart, AddProductToCart, numOfCartItems, totalCartPrice, allProducts }}>
     {children}
     </cartContext.Provider>
 }
