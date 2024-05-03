@@ -12,6 +12,7 @@ import EmailRest from "../pages/EmailRest";
 import { OTPPage } from "../pages/OTPPage";
 import { NewPassword } from "../pages/NewPassword";
 import { ProductDetailes } from "../pages/ProductDetailes";
+import { Cart } from "../pages/Cart";
 
 
 const router = createBrowserRouter(
@@ -28,6 +29,8 @@ const router = createBrowserRouter(
                 <Route path="brands" element={<Brands />}/>
                 <Route path="categories" element={<Categories />}/>
                 <Route path="profile" element={<Profile />}/>
+                <Route path="cart" element={<Cart />}/>
+
                 <Route path="emailrest" element={<EmailRest />}/>
                 <Route path="otppage" element={<OTPPage />}/>
                 <Route path="newpassword" element={<NewPassword />}/>

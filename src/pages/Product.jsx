@@ -7,8 +7,15 @@ import instance from "../config/axios.config";
 import { useQuery } from "react-query";
 import { Loading } from "../components/ui/Loading";
 import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { cartContext } from "../context/cartContext";
+import toast from "react-hot-toast";
 
 export const Product = () => {
+
+  const { AddProductToCart }=useContext(cartContext)
+  const [isIndividualLoading, setIsIndividualLoading] = useState(false)
+
 
   function GetAllProducts(){
     return instance.get('products')
@@ -17,8 +24,22 @@ export const Product = () => {
   const ResponseAllProduct = data?.data.data
 
 
-  const hanmd =()=>{
-    console.log("first")
+  async function HandleAddProdct(productId){
+    setIsIndividualLoading((pre)=>({
+      ...pre,
+      [productId]:true
+    }))
+    const res = await AddProductToCart(productId)
+    console.log(res)
+    if (res.status === 'success') {
+      toast.success("Product added successfully to your cart", {
+        position: "bottom-right"
+      })
+    }
+    setIsIndividualLoading((pre) => ({
+      ...pre,
+      [productId]: false
+    }))
   }
 
   if (isLoading) return <Loading color={'#14B014'} width={"80"} />
@@ -43,6 +64,8 @@ export const Product = () => {
 
       <div className="grid grid-cols-12 gap-3">
         {ResponseAllProduct.map((product)=>(
+        
+          
           <div key={product.id} className="product col-span-12  sm:col-span-12 md:col-span-4 lg:col-span-2 px-3 py-2 bg-slate-50 border-solid border-1 border-green-400 rounded-md ">
           <Link to={`/productdetailes/${product.id}`}>
               <img src={product.imageCover} className="w-full  " alt="" />
@@ -53,8 +76,15 @@ export const Product = () => {
                 <p className="text-sm "><i className="fa-sharp fa-solid fa-star pe-1" style={{ color: "#FFD43B" }}></i>{product.ratingsAverage}</p>
               </div>
           </Link>
-          <button onClick={hanmd} className="bg-green-600 w-full rounded-md py-1 mt-2 text-white text-sm font-semibold">Add To Cart</button>
+            
+
+
+
+              <button onClick={() => HandleAddProdct(product.id)}
+              className="bg-green-600 w-full rounded-md py-1 mt-2 text-white text-sm font-semibold" disabled={isIndividualLoading[product.id]}>
+                {isIndividualLoading[product.id] ? <Loading width={20} color={"#eeee"} /> : "Add To Cart"}</button>
           </div>
+
         ))}
 
 

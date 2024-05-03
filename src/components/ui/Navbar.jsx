@@ -2,9 +2,12 @@ import { Link, useNavigate } from "react-router-dom"
 import Logo from '../../images/freshcart-logo.svg'
 import { useContext } from "react"
 import { authContext } from "../../context/auth"
+import { cartContext } from "../../context/cartContext"
 
 export const Navbar = () => {
     const {token,setToken} = useContext(authContext)
+
+    const { numOfCartItems  } = useContext(cartContext)
     const Navaigate =useNavigate()
     const HandleLogout =()=>{
         localStorage.removeItem('token')
@@ -30,6 +33,9 @@ export const Navbar = () => {
                                     <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'brands'}> Brands </Link>
                                 </li>
                                 <li>
+                                    <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'cart'}> Card(<span className="text-red-600">{numOfCartItems}</span>) </Link>
+                                </li>
+                                <li>
                                     <Link className="text-gray-500 transition font-semibold hover:text-green-500" to={'profile'}> Profile </Link>
                                 </li>
                         </> : ""
@@ -37,7 +43,7 @@ export const Navbar = () => {
                     </ul>
                 </nav>
 
-                
+
                 <div className="flex flex-1 items-center justify-end gap-4">
                     {token ? (
                         <ul className="hidden md:flex md:items-center md:gap-6 md:text-sm">

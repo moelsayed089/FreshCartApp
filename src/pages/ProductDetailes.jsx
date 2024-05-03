@@ -2,21 +2,38 @@ import { useParams } from "react-router-dom"
 import instance from "../config/axios.config"
 import { useQuery } from "react-query"
 import { Loading } from "../components/ui/Loading"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { cartContext } from "../context/cartContext"
+import toast from "react-hot-toast"
 
 export const ProductDetailes = () => {
     const { id } = useParams()
 
     function GetProductDetailes() {
         return instance.get(`/products/${id}`)
+
     }
     const { data, isLoading } = useQuery('productdetailes', GetProductDetailes)
     const ResponseProductDetailes = data?.data.data
 
     const [selectedImage, setSelectedImage] = useState("")
+    const [isloading, setIsLoading] = useState(false)
 
     const HandelSelectImage = (imageUrl)=>{
         setSelectedImage(imageUrl)
+    }
+
+    const { AddProductToCart } = useContext(cartContext)
+    const HandleAddProdct = async (productId) => {
+        setIsLoading(true)
+        const res = await AddProductToCart(productId)
+        if (res.status === 'success') {
+            toast.success("Product added successfully to your cart", {
+                position: "bottom-right"
+            })
+        }
+    
+        setIsLoading(false)
     }
 
     const ResponseImageDesplay = ResponseProductDetailes?.images.slice(0,4)
@@ -51,10 +68,12 @@ export const ProductDetailes = () => {
                         </div>
 
                     <div className=" md:mt-[50px]">
-                        <button className=" bg-green-600 w-full rounded-md py-1 mt-2 text-white text-sm font-semibold">Add To Cart</button>
+                        <button onClick={()=> HandleAddProdct(ResponseProductDetailes.id)} className=" bg-green-600 w-full rounded-md py-1 mt-2 text-white text-sm font-semibold">
+                            {isloading ? <Loading width={20} color={"#eeee"}/> : "Add To Cart"}
+                        </button>
                     </div>
                     </div>
-                
+            
             </div>
             </div>
         
