@@ -4,7 +4,7 @@ import { Loading } from '../components/ui/Loading'
 import toast from 'react-hot-toast'
 
 export const Cart = () => {
-  const { DeleteProductToCart, GetProductToCart, numOfCartItems, totalCartPrice, allProducts } = useContext(cartContext)
+  const { UpdataProductToCart, DeleteProductToCart, GetProductToCart, numOfCartItems, totalCartPrice, allProducts } = useContext(cartContext)
   const [isLoading, setIsLoading] = useState(false)
 
 
@@ -32,6 +32,29 @@ export const Cart = () => {
     }))
   }
 
+
+
+  const UpdataProductToCartIncrement = async (productId,count) => {
+    const res = await UpdataProductToCart(productId,count)
+    console.log(res)
+    if (res.status === "success") {
+      toast.success("Product Increamet successfully", {
+        position: "bottom-right"
+      })
+    }
+  }
+
+
+
+  const UpdataProductToCartdecreasement = async (productId, count) => {
+    const res = await UpdataProductToCart(productId, count)
+    console.log(res)
+    if (res.status === "success") {
+      toast.success("Product Decreasement successfully", {
+        position: "bottom-right"
+      })
+    }
+  }
 
   if (allProducts === null) return <Loading color={'#14B014'} width={"80"} />
 
@@ -62,9 +85,9 @@ export const Cart = () => {
           </div>
 
           <div className="col-span-1 flex items-center justify-between mt-3 md:mt-0 ">
-            <button className="border-2  py-1 rounded-md px-3 border-green-400  " >-</button>
+            <button onClick={() => UpdataProductToCartdecreasement(item.product.id, item.count - 1)} className="border-2  py-1 rounded-md px-3 border-green-400  " >-</button>
             <p className="text-lg font-semibold mx-4">{item.count}</p>
-            <button className="border-2 py-1 rounded-md px-3 border-green-400  ">+</button>
+            <button onClick={() => UpdataProductToCartIncrement(item.product.id, item.count + 1)} className="border-2 py-1 rounded-md px-3 border-green-400  ">+</button>
           </div>
         </div>
       })}

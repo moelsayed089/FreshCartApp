@@ -69,12 +69,36 @@ export function CartCintextProvider({children}){
     }
     
 
+
+    async function UpdataProductToCart(productId, count) {
+        try {
+            const { data } = await instance.put(`/cart/${productId}`, {
+                "count": count
+            } ,{
+                headers: {
+                    token: localStorage.getItem('token')
+                }
+            })
+
+            setNumOfCartItems(data.numOfCartItems)
+            setTotalCartPrice(data.data.totalCartPrice)
+            setAllProducts(data.data.products)
+
+            return data
+        } catch (error) {
+            console.log(error.response.data.message)
+        }
+    }
+
+
+
+
     useEffect(() => {
         GetProductToCart()
     }, [])
 
 
-    return <cartContext.Provider value={{ DeleteProductToCart, GetProductToCart, AddProductToCart, numOfCartItems, totalCartPrice, allProducts }}>
+    return <cartContext.Provider value={{ UpdataProductToCart, DeleteProductToCart, GetProductToCart, AddProductToCart, numOfCartItems, totalCartPrice, allProducts }}>
     {children}
     </cartContext.Provider>
 }
