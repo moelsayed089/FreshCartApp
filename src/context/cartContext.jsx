@@ -11,6 +11,7 @@ export function CartCintextProvider({children}){
     const [numOfCartItems, setNumOfCartItems]= useState(null)
     const [totalCartPrice, setTotalCartPrice]= useState(null)
     const [allProducts, setAllProducts]= useState([])
+    const [cardId, setCardId]= useState([])
 
     async function AddProductToCart(productId) {
         try {
@@ -21,6 +22,7 @@ export function CartCintextProvider({children}){
                     token : localStorage.getItem('token')
                 }
             } )
+            setCardId(data.data._id)
             setNumOfCartItems(data.numOfCartItems)
             setTotalCartPrice(data.data.totalCartPrice)
         return data
@@ -39,7 +41,8 @@ export function CartCintextProvider({children}){
                     token: localStorage.getItem('token')
                 }
             })
-
+            
+            setCardId(data.data._id)
             setNumOfCartItems(data.numOfCartItems)
             setTotalCartPrice(data.data.totalCartPrice)
             setAllProducts(data.data.products)
@@ -117,7 +120,9 @@ export function CartCintextProvider({children}){
     }, [])
 
 
-    return <cartContext.Provider value={{ ClearProductToCart, UpdataProductToCart, DeleteProductToCart, GetProductToCart, AddProductToCart, numOfCartItems, totalCartPrice, allProducts }}>
+    return <cartContext.Provider value={{
+        cardId, setNumOfCartItems, setTotalCartPrice, setAllProducts,
+    ClearProductToCart, UpdataProductToCart, DeleteProductToCart, GetProductToCart, AddProductToCart, numOfCartItems, totalCartPrice, allProducts }}>
     {children}
     </cartContext.Provider>
 }

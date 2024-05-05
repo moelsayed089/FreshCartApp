@@ -13,6 +13,7 @@ import { OTPPage } from "../pages/OTPPage";
 import { NewPassword } from "../pages/NewPassword";
 import { ProductDetailes } from "../pages/ProductDetailes";
 import { Cart } from "../pages/Cart";
+import { Payment } from "../pages/Payment";
 
 
 const router = createBrowserRouter(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
                 <Route path="categories" element={<Categories />}/>
                 <Route path="profile" element={<Profile />}/>
                 <Route path="cart" element={<Cart />}/>
+                <Route path="payment" element={<Payment />}/>
 
                 <Route path="emailrest" element={<EmailRest />}/>
                 <Route path="otppage" element={<OTPPage />}/>

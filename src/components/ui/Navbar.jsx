@@ -33,7 +33,7 @@ export const Navbar = () => {
                                     <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'brands'}> Brands </Link>
                                 </li>
                                 <li>
-                                    <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'cart'}> Card(<span className="text-red-600">{numOfCartItems}</span>) </Link>
+                                    <Link className="text-gray-500 font-semibold transition hover:text-green-500" to={'cart'}> Card(<span className="text-red-600">{numOfCartItems ? numOfCartItems : 0}</span>) </Link>
                                 </li>
                                 <li>
                                     <Link className="text-gray-500 transition font-semibold hover:text-green-500" to={'profile'}> Profile </Link>

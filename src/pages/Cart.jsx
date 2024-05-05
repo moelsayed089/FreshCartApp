@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { cartContext } from '../context/cartContext'
 import { Loading } from '../components/ui/Loading'
 import toast from 'react-hot-toast'
+import { Link } from 'react-router-dom'
 
 export const Cart = () => {
   const { ClearProductToCart, UpdataProductToCart, DeleteProductToCart, GetProductToCart, numOfCartItems, totalCartPrice, allProducts } = useContext(cartContext)
@@ -67,21 +68,11 @@ export const Cart = () => {
     }
   }
 
-
-
-   if (allProducts === null) return <Loading color={'#14B014'} width={"80"} />
-
-
+  if (allProducts === null) return <Loading color={'#14B014'} width={"80"} />
 
 
   return <>
-
-    
     <div className="mx-auto max-w-screen-xl  px-4 sm:px-6 lg:px-8">
-
-
-      
-
       {allProducts.length === 0 ? <div className='flex items-center justify-center h-screen'>
         <h1 className='text-5xl'>Not Products Added !!</h1>
       </div> : <div className='py-2 px-3'>
@@ -127,10 +118,10 @@ export const Cart = () => {
 
 
 
-        {allProducts.length === 0 ? "" : <button onClick={() => RemoveAllProductToCart()}
+        {allProducts.length === 0 ? "" : <Link to={'/payment'} 
           className=" mt-2 border-2 py-2 text-sm font-medium rounded-md px-3 border-green-500 hover:text-white hover:bg-green-500 duration-200 ">
           Confirm Order
-        </button>}
+        </Link>}
     </div>
 
 

@@ -92,3 +92,23 @@ export const ValditionResetPassword = (values) => {
 
   return errors;
 };
+
+
+// ----------- ValditionPaymentField -----------
+export const ValditionPaymentField = (values) => {
+  const errors = {};
+   if (values.details.length <5) {
+     errors.details = "Detailes is require between 5 character";
+   }
+
+
+if (!values.phone.match(/^(02)?01[0125][0-9]{8}$/)) {
+  errors.phone = "Phone is require!!";
+}
+ if (values.city.length < 4) {
+   errors.city = "City is require!!";
+ }
+
+  return errors;
+};
+
