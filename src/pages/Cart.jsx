@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 export const Cart = () => {
   const { ClearProductToCart, UpdataProductToCart, DeleteProductToCart, GetProductToCart, numOfCartItems, totalCartPrice, allProducts } = useContext(cartContext)
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingRemoveAllProduct, setIsLoadingRemoveAllProduct] = useState(false)
 
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export const Cart = () => {
 
 
   const RemoveAllProductToCart = async () => {
+    setIsLoadingRemoveAllProduct(true)
     const res = await ClearProductToCart()
     console.log(res)
     if (res.message === "success") {
@@ -51,6 +53,7 @@ export const Cart = () => {
         position: "bottom-right"
       })
     }
+    setIsLoadingRemoveAllProduct(false)
   }
 
 
@@ -116,10 +119,19 @@ export const Cart = () => {
 
 
 
-      {allProducts.length === 0 ? "" : <button onClick={() => RemoveAllProductToCart()}
-        className=" mt-2 border-2 py-2 rounded-md px-10 border-red-500 hover:text-white hover:bg-red-600 duration-200 ">
-        Clear All Products
-      </button>}
+    <div className=' flex justify-between items-center mb-10'>
+        {allProducts.length === 0 ? "" : <button onClick={() => RemoveAllProductToCart()}
+          className=" mt-2 border-2 text-sm font-medium  me-2 py-2 rounded-md px-3 border-red-500 hover:text-white hover:bg-red-600 duration-200 ">
+          {isLoadingRemoveAllProduct ? <Loading color={"#0D0D0D"} width={20}/> : "Clear All Products"}
+        </button>}
+
+
+
+        {allProducts.length === 0 ? "" : <button onClick={() => RemoveAllProductToCart()}
+          className=" mt-2 border-2 py-2 text-sm font-medium rounded-md px-3 border-green-500 hover:text-white hover:bg-green-500 duration-200 ">
+          Confirm Order
+        </button>}
+    </div>
 
 
     </div>
