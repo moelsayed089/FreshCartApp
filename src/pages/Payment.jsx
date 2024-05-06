@@ -77,8 +77,23 @@ const FormObject = useFormik({
 
 
 
-    const CardPaymentMethod = () => {
-        console.log("CardPaymentMethod")
+    const CardPaymentMethod = async (values) => {
+        try {
+            const { data } = await instance.post(`/orders/checkout-session/${cardId}?url=http://${window.location.host}`,values,{
+                headers: {
+                    token: localStorage.getItem('token')
+                }
+            })
+            if (data.status === "success"){
+                window.open(data.session.url , "_blank")
+            }
+            setNumOfCartItems(0)
+            setTotalCartPrice(0)
+            setAllProducts([])
+            return data 
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 

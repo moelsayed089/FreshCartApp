@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import instance from "../config/axios.config";
-import toast from "react-hot-toast";
+
 
 
 export const cartContext = createContext()
@@ -27,7 +27,7 @@ export function CartCintextProvider({children}){
             setTotalCartPrice(data.data.totalCartPrice)
         return data
         } catch (error) {
-            console.log(error.response.data.message)
+            return error
         }
     }
 
@@ -48,7 +48,7 @@ export function CartCintextProvider({children}){
             setAllProducts(data.data.products)
             return data
         } catch (error) {
-            console.log(error.response.data.message)
+           return error
         }
     }
 
@@ -67,7 +67,7 @@ export function CartCintextProvider({children}){
 
             return data
         } catch (error) {
-            console.log(error.response.data.message)
+            return error
         }
     }
     
@@ -89,7 +89,7 @@ export function CartCintextProvider({children}){
 
             return data
         } catch (error) {
-            console.log(error.response.data.message)
+            return error
         }
     }
 
@@ -108,7 +108,7 @@ export function CartCintextProvider({children}){
 
             return data
         } catch (error) {
-            console.log(error.response.data.message)
+            return error
         }
     }
 
