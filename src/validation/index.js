@@ -131,3 +131,27 @@ export const ValditionChagePaaword = (values) => {
 
   return errors;
 };
+
+
+// ----------- ValditionChageUserInfo -----------
+export const ValditionChageUserInfo = (values) => {
+  const errors = {};
+
+  
+    if (values.name.length < 4) {
+      errors.name = "Name must be form 4 characters";
+    }
+
+ if (!values.phone.match(/^(02)?01[0125][0-9]{8}$/)) {
+   errors.phone = "Phone is require!!";
+ }
+ if (
+   values.email.includes("@") === false &&
+   values.email.includes(".") === false
+ ) {
+   errors.email = "Email not valid";
+ }
+
+
+  return errors;
+};

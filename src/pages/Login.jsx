@@ -2,7 +2,7 @@ import { useFormik } from "formik"
 import instance from "../config/axios.config"
 import { ValditionLoginUser } from "../validation"
 import Input from "../components/ui/Input"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, json, useNavigate } from "react-router-dom"
 import { useContext, useState } from "react"
 import { Loading } from "../components/ui/Loading"
 import toast from "react-hot-toast"
@@ -36,6 +36,7 @@ export const Login = () => {
       }
 
       localStorage.setItem('token',data.token)
+      localStorage.setItem('user' ,JSON.stringify(data.user))
       setToken(data.token)
 
       setTimeout(() => {
